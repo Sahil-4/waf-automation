@@ -1,0 +1,49 @@
+name: Hacker News Story Scraper
+description: Scrapes the front page of Hacker News — titles and links — and saves results to disk.
+
+browser:
+  headless: false
+  engine: chromium
+  viewport:
+    width: 1280
+    height: 900
+
+variables:
+  pageCounter: "1"
+  outputDir: ./output
+
+steps:
+  - action: browser-open
+    label: Open Hacker News
+    argument: https://news.ycombinator.com
+
+  - action: wait-for-selector
+    label: Wait for story list
+    selector: .athing
+
+  - action: scrape-all
+    label: Scrape all stories
+    selector: .athing
+    argument: '[{"name":"title","selector":".titleline > a","attribute":"text"},{"name":"link","selector":".titleline > a","attribute":"href"}]'
+    target: stories
+
+  - action: store-value
+    label: Record page number
+    argument: "{{ctx.pageCounter}}"
+    target: currentPage
+
+  - action: log
+    label: Log progress
+    argument: "Scraped page {{ctx.currentPage}} — found stories"
+
+  - action: save-to-file
+    label: Save stories to JSON
+    argument: "{{ctx.outputDir}}/hn-stories.json"
+    target: stories
+
+  - action: screenshot
+    label: Capture page screenshot
+    argument: "{{ctx.outputDir}}/hn-screenshot.png"
+
+  - action: browser-close
+    label: Close browser
