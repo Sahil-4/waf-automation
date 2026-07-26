@@ -16,6 +16,28 @@
 
 ## Installation
 
+### From npm (CLI)
+
+```bash
+npm install -g waf-automation
+npx playwright install chromium
+```
+
+The package installs as `waf-automation`, but it exposes a `waf` binary, so the CLI command is just `waf` (see [Quick start (CLI)](#quick-start-cli) below).
+
+### As a library
+
+```bash
+npm install waf-automation
+npx playwright install chromium
+```
+
+```typescript
+import { run } from "waf-automation";
+```
+
+### From source (development)
+
 ```bash
 npm install
 npx playwright install chromium
@@ -52,10 +74,10 @@ Sample output:
 ## Quick start (library)
 
 ```typescript
-import { run } from 'waf';
+import { run } from "waf-automation";
 
 const result = await run({
-  config: './configs/example.yaml', // or a pre-parsed WafConfig object
+  config: "./configs/example.yaml", // or a pre-parsed WafConfig object
   headed: false,
   dryRun: false,
 });
@@ -72,12 +94,12 @@ interface WafConfig {
   name: string;
   description?: string;
   browser: {
-    headless: boolean;                             // default true
-    engine?: 'chromium' | 'firefox' | 'webkit';     // default chromium
+    headless: boolean; // default true
+    engine?: "chromium" | "firefox" | "webkit"; // default chromium
     viewport?: { width: number; height: number };
     userAgent?: string;
   };
-  variables?: Record<string, string>;               // seeds the runtime context
+  variables?: Record<string, string>; // seeds the runtime context
   steps: Step[];
 }
 
@@ -85,19 +107,23 @@ interface Step {
   action: ActionType;
   label?: string;
   selector?: string;
-  selectorType?: 'css' | 'xpath';                   // default css
-  argument?: string;                                // supports {{ctx.key}} tokens
-  target?: string;                                  // context key to write result into
-  onError?: 'fail' | 'ignore';                      // default fail
-  condition?: Condition;                             // loop / if / if-else
-  steps?: Step[];                                   // child steps for loop / if / if-else
-  elseSteps?: Step[];                                // else branch for if-else
+  selectorType?: "css" | "xpath"; // default css
+  argument?: string;              // supports {{ctx.key}} tokens
+  target?: string;                // context key to write result into
+  onError?: "fail" | "ignore";    // default fail
+  condition?: Condition;          // loop / if / if-else
+  steps?: Step[];                 // child steps for loop / if / if-else
+  elseSteps?: Step[];             // else branch for if-else
 }
 
 interface Condition {
-  type: 'element-exists' | 'context-equals' | 'context-greater-than' | 'context-contains';
-  selector?: string;   // element-exists
-  key?: string;        // context-*
+  type:
+    | "element-exists"
+    | "context-equals"
+    | "context-greater-than"
+    | "context-contains";
+  selector?: string;  // element-exists
+  key?: string;       // context-*
   value?: string | number;
 }
 ```
@@ -108,35 +134,35 @@ Any `{{ctx.keyName}}` token inside `argument`, `selector`, `target`, or `conditi
 
 ## Action reference
 
-| Action | Description |
-|---|---|
-| `browser-open` | Launches the browser per `config.browser`; navigates to `argument` if provided. Must be the first step. |
-| `browser-close` | Closes the browser. |
-| `navigate` | `page.goto(argument)`, waits for network idle. |
-| `reload` | Reloads the current page. |
-| `go-back` | Navigates back in history. |
-| `click` | Waits for `selector`, then clicks it. |
-| `type` | Waits for `selector`, then fills it with `argument`. |
-| `clear` | Clears the value of `selector`. |
-| `press-key` | Presses the keyboard key named in `argument`. |
-| `select-option` | Selects an option in `selector` by value `argument`. |
-| `hover` | Hovers over `selector`. |
-| `scroll` | Scrolls to the bottom (`argument: "bottom"`) or by `argument` pixels. |
-| `wait-for-selector` | Waits for `selector` to appear. |
-| `wait-for-navigation` | Waits for network idle. |
-| `wait-for-timeout` | Waits for `argument` milliseconds. |
-| `scrape-text` | Reads `textContent` of `selector` into `target`. |
-| `scrape-attribute` | Reads attribute `argument` of `selector` into `target`. |
-| `scrape-all` | Reads a list of field mappings (JSON in `argument`, e.g. `[{"name":"title","selector":".title","attribute":"text"}]`) for every element matching `selector`, storing an array in `target`. |
-| `element-exists` | Stores a boolean in `target` indicating whether `selector` exists. |
-| `store-value` | Writes `argument` into `target`. |
-| `log` | Logs `argument`. |
-| `save-to-file` | Writes `context[target]` to the file at path `argument` (JSON if object/array, raw text otherwise). Creates directories as needed. |
-| `screenshot` | Saves a full-page screenshot to `argument`. |
-| `loop` | While `condition` is true, runs `steps` repeatedly. Exits on `break` or when the condition becomes false. |
-| `if` | Runs `steps` if `condition` is true. |
-| `if-else` | Runs `steps` if `condition` is true, otherwise `elseSteps`. |
-| `break` | Exits the nearest enclosing `loop`. |
+| Action                | Description                                                                                                                                                                                |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `browser-open`        | Launches the browser per `config.browser`; navigates to `argument` if provided. Must be the first step.                                                                                    |
+| `browser-close`       | Closes the browser.                                                                                                                                                                        |
+| `navigate`            | `page.goto(argument)`, waits for network idle.                                                                                                                                             |
+| `reload`              | Reloads the current page.                                                                                                                                                                  |
+| `go-back`             | Navigates back in history.                                                                                                                                                                 |
+| `click`               | Waits for `selector`, then clicks it.                                                                                                                                                      |
+| `type`                | Waits for `selector`, then fills it with `argument`.                                                                                                                                       |
+| `clear`               | Clears the value of `selector`.                                                                                                                                                            |
+| `press-key`           | Presses the keyboard key named in `argument`.                                                                                                                                              |
+| `select-option`       | Selects an option in `selector` by value `argument`.                                                                                                                                       |
+| `hover`               | Hovers over `selector`.                                                                                                                                                                    |
+| `scroll`              | Scrolls to the bottom (`argument: "bottom"`) or by `argument` pixels.                                                                                                                      |
+| `wait-for-selector`   | Waits for `selector` to appear.                                                                                                                                                            |
+| `wait-for-navigation` | Waits for network idle.                                                                                                                                                                    |
+| `wait-for-timeout`    | Waits for `argument` milliseconds.                                                                                                                                                         |
+| `scrape-text`         | Reads `textContent` of `selector` into `target`.                                                                                                                                           |
+| `scrape-attribute`    | Reads attribute `argument` of `selector` into `target`.                                                                                                                                    |
+| `scrape-all`          | Reads a list of field mappings (JSON in `argument`, e.g. `[{"name":"title","selector":".title","attribute":"text"}]`) for every element matching `selector`, storing an array in `target`. |
+| `element-exists`      | Stores a boolean in `target` indicating whether `selector` exists.                                                                                                                         |
+| `store-value`         | Writes `argument` into `target`.                                                                                                                                                           |
+| `log`                 | Logs `argument`.                                                                                                                                                                           |
+| `save-to-file`        | Writes `context[target]` to the file at path `argument` (JSON if object/array, raw text otherwise). Creates directories as needed.                                                         |
+| `screenshot`          | Saves a full-page screenshot to `argument`.                                                                                                                                                |
+| `loop`                | While `condition` is true, runs `steps` repeatedly. Exits on `break` or when the condition becomes false.                                                                                  |
+| `if`                  | Runs `steps` if `condition` is true.                                                                                                                                                       |
+| `if-else`             | Runs `steps` if `condition` is true, otherwise `elseSteps`.                                                                                                                                |
+| `break`               | Exits the nearest enclosing `loop`.                                                                                                                                                        |
 
 ## Example: `configs/example.yaml`
 
@@ -168,22 +194,22 @@ Project layout:
 
 ```
 src/
-├── index.ts        Public API (run(), types)
-├── cli.ts           CLI entrypoint (commander)
-├── loader.ts         Config file parsing/validation (YAML + JSON)
-├── context.ts         RuntimeContext + {{ctx.key}} interpolation
-├── executor.ts         Recursive step runner
-├── logger.ts            Structured per-step run logger
+├── index.ts                Public API (run(), types)
+├── cli.ts                  CLI entrypoint (commander)
+├── loader.ts               Config file parsing/validation (YAML + JSON)
+├── context.ts              RuntimeContext + {{ctx.key}} interpolation
+├── executor.ts             Recursive step runner
+├── logger.ts               Structured per-step run logger
 └── actions/
-    ├── index.ts          Action dispatcher
-    ├── browser.ts        browser-open, browser-close
-    ├── navigation.ts     navigate, reload, go-back
-    ├── interaction.ts    click, type, clear, press-key, select-option, hover, scroll
-    ├── wait.ts           wait-for-selector, wait-for-navigation, wait-for-timeout
-    ├── read.ts           scrape-text, scrape-attribute, scrape-all, element-exists
-    ├── context.ts        store-value, log
-    ├── output.ts         save-to-file, screenshot
-    └── control.ts        loop, if, if-else, break
+    ├── index.ts            Action dispatcher
+    ├── browser.ts          browser-open, browser-close
+    ├── navigation.ts       navigate, reload, go-back
+    ├── interaction.ts      click, type, clear, press-key, select-option, hover, scroll
+    ├── wait.ts             wait-for-selector, wait-for-navigation, wait-for-timeout
+    ├── read.ts             scrape-text, scrape-attribute, scrape-all, element-exists
+    ├── context.ts          store-value, log
+    ├── output.ts           save-to-file, screenshot
+    └── control.ts          loop, if, if-else, break
 ```
 
 ## License
