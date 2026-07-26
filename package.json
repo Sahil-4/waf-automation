@@ -1,5 +1,5 @@
 {
-  "name": "waf",
+  "name": "waf-automation",
   "version": "0.1.0",
   "description": "Web Automation Framework — general-purpose browser step executor",
   "main": "dist/index.js",
@@ -9,18 +9,19 @@
   "scripts": {
     "build": "tsc",
     "dev": "ts-node src/cli.ts",
-    "start": "node dist/cli.js"
+    "start": "node dist/cli.js",
+    "prepublishOnly": "npm run build"
   },
   "keywords": ["playwright", "browser-automation", "cli", "yaml", "web-scraping", "automation"],
   "author": "Sahil-4",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/<your-username>/waf.git"
+    "url": "git+https://github.com/sahil-4/waf.git"
   },
-  "homepage": "https://github.com/<your-username>/waf#readme",
+  "homepage": "https://github.com/sahil-4/waf#readme",
   "bugs": {
-    "url": "https://github.com/<your-username>/waf/issues"
+    "url": "https://github.com/sahil-4/waf/issues"
   },
   "engines": {
     "node": ">=20"
