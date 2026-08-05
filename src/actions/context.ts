@@ -8,7 +8,7 @@ export async function storeValue(
   context: RuntimeContext,
   _page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   const target = step.target ?? '';
   const value = step.argument ?? '';
@@ -21,7 +21,7 @@ export async function logMessage(
   _context: RuntimeContext,
   _page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   logger.info(step.argument ?? '');
 }

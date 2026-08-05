@@ -16,7 +16,7 @@ export async function waitForSelector(
   _context: RuntimeContext,
   page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   const selector = resolveSelector(step);
   const timeout = (step as Step & { timeout?: number }).timeout ?? 10000;
@@ -29,7 +29,7 @@ export async function waitForNavigation(
   _context: RuntimeContext,
   page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   logger.info('Waiting for navigation (networkidle)');
   await page.waitForLoadState('networkidle');
@@ -40,7 +40,7 @@ export async function waitForTimeout(
   _context: RuntimeContext,
   page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   const ms = parseInt(step.argument ?? '1000', 10);
   logger.info(`Waiting ${ms}ms`);

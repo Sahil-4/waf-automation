@@ -10,7 +10,7 @@ export async function saveToFile(
   context: RuntimeContext,
   _page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   const filePath = step.argument ?? '';
   const key = step.target ?? '';
@@ -35,7 +35,7 @@ export async function screenshot(
   _context: RuntimeContext,
   page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   const filePath = step.argument ?? 'screenshot.png';
   const resolved = path.resolve(filePath);

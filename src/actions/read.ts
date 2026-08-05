@@ -22,7 +22,7 @@ export async function scrapeText(
   context: RuntimeContext,
   page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   const selector = resolveSelector(step);
   const target = step.target ?? '';
@@ -37,7 +37,7 @@ export async function scrapeAttribute(
   context: RuntimeContext,
   page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   const selector = resolveSelector(step);
   const attribute = step.argument ?? '';
@@ -53,7 +53,7 @@ export async function scrapeAll(
   context: RuntimeContext,
   page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   const selector = resolveSelector(step);
   const target = step.target ?? '';
@@ -63,7 +63,9 @@ export async function scrapeAll(
   try {
     mappings = JSON.parse(mappingJson) as FieldMapping[];
   } catch {
-    throw new Error(`scrape-all: argument must be a valid JSON array of field mappings, got: ${mappingJson}`);
+    throw new Error(
+      `scrape-all: argument must be a valid JSON array of field mappings, got: ${mappingJson}`,
+    );
   }
 
   logger.info(`Scraping all "${selector}" with ${mappings.length} field mappings → ctx.${target}`);
@@ -96,7 +98,7 @@ export async function elementExists(
   context: RuntimeContext,
   page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   const selector = resolveSelector(step);
   const target = step.target ?? '';

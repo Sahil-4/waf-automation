@@ -8,7 +8,7 @@ export async function navigate(
   _context: RuntimeContext,
   page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   const url = step.argument ?? '';
   logger.info(`Navigating to ${url}`);
@@ -20,7 +20,7 @@ export async function reload(
   _context: RuntimeContext,
   page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   logger.info('Reloading page');
   await page.reload({ waitUntil: 'networkidle' });
@@ -31,7 +31,7 @@ export async function goBack(
   _context: RuntimeContext,
   page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   logger.info('Going back');
   await page.goBack({ waitUntil: 'networkidle' });

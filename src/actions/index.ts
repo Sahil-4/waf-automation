@@ -17,7 +17,7 @@ export type ExecuteStepsFn = (
   context: RuntimeContext,
   page: Page,
   browser: Browser,
-  logger: Logger
+  logger: Logger,
 ) => Promise<void>;
 
 export interface DispatchResult {
@@ -31,7 +31,7 @@ export async function dispatch(
   browser: Browser,
   logger: Logger,
   config: WafConfig,
-  executeStepsFn: ExecuteStepsFn
+  executeStepsFn: ExecuteStepsFn,
 ): Promise<DispatchResult> {
   switch (step.action) {
     case 'browser-open': {

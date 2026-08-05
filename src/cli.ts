@@ -37,7 +37,7 @@ program
 
       console.log('');
       console.log(
-        `[waf] Run complete: ${total} steps | ✓ ${passed} passed | ✗ ${failed} failed | ~ ${ignored} ignored | ${totalMs}ms`
+        `[waf] Run complete: ${total} steps | ✓ ${passed} passed | ✗ ${failed} failed | ~ ${ignored} ignored | ${totalMs}ms`,
       );
 
       if (result.status === 'failed') {

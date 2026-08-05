@@ -46,7 +46,11 @@ function validateConfig(raw: unknown, filePath: string): WafConfig {
     throw new Error(`Config "${filePath}" is missing required field: name (string)`);
   }
 
-  if (typeof obj['browser'] !== 'object' || obj['browser'] === null || Array.isArray(obj['browser'])) {
+  if (
+    typeof obj['browser'] !== 'object' ||
+    obj['browser'] === null ||
+    Array.isArray(obj['browser'])
+  ) {
     throw new Error(`Config "${filePath}" is missing required field: browser (object)`);
   }
 
@@ -61,7 +65,7 @@ function validateConfig(raw: unknown, filePath: string): WafConfig {
     !['chromium', 'firefox', 'webkit'].includes(browser['engine'] as string)
   ) {
     throw new Error(
-      `Config "${filePath}": browser.engine must be one of: chromium, firefox, webkit`
+      `Config "${filePath}": browser.engine must be one of: chromium, firefox, webkit`,
     );
   }
 

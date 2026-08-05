@@ -14,7 +14,7 @@ export async function browserOpen(
   _page: Page | null,
   _browser: Browser | null,
   logger: Logger,
-  config: WafConfig
+  config: WafConfig,
 ): Promise<BrowserHandle> {
   const engine = config.browser.engine ?? 'chromium';
   const launcher = engine === 'firefox' ? firefox : engine === 'webkit' ? webkit : chromium;
@@ -49,7 +49,7 @@ export async function browserClose(
   _context: RuntimeContext,
   _page: Page,
   browser: Browser,
-  _logger: Logger
+  _logger: Logger,
 ): Promise<void> {
   await browser.close();
 }

@@ -36,7 +36,7 @@ export class Logger {
     step: Step,
     status: StepLogEntry['status'],
     durationMs: number,
-    error?: string
+    error?: string,
   ): void {
     const label = step.label ?? step.action;
     const entry: StepLogEntry = {

@@ -37,7 +37,7 @@ export async function executeSteps(
   page: Page,
   browser: Browser,
   logger: Logger,
-  config: WafConfig
+  config: WafConfig,
 ): Promise<{ page: Page; browser: Browser }> {
   let currentPage = page;
   let currentBrowser = browser;
@@ -58,7 +58,7 @@ export async function executeSteps(
         logger,
         config,
         (childSteps, ctx, pg, br, log) =>
-          executeSteps(childSteps, ctx, pg, br, log, config).then(() => undefined)
+          executeSteps(childSteps, ctx, pg, br, log, config).then(() => undefined),
       );
 
       if (result.browserHandle) {

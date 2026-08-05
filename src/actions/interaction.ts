@@ -16,7 +16,7 @@ export async function click(
   _context: RuntimeContext,
   page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   const selector = resolveSelector(step);
   logger.info(`Clicking "${selector}"`);
@@ -29,7 +29,7 @@ export async function typeText(
   _context: RuntimeContext,
   page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   const selector = resolveSelector(step);
   const text = step.argument ?? '';
@@ -43,7 +43,7 @@ export async function clear(
   _context: RuntimeContext,
   page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   const selector = resolveSelector(step);
   logger.info(`Clearing "${selector}"`);
@@ -56,7 +56,7 @@ export async function pressKey(
   _context: RuntimeContext,
   page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   const key = step.argument ?? '';
   logger.info(`Pressing key "${key}"`);
@@ -68,7 +68,7 @@ export async function selectOption(
   _context: RuntimeContext,
   page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   const selector = resolveSelector(step);
   const value = step.argument ?? '';
@@ -81,7 +81,7 @@ export async function hover(
   _context: RuntimeContext,
   page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   const selector = resolveSelector(step);
   logger.info(`Hovering over "${selector}"`);
@@ -93,7 +93,7 @@ export async function scroll(
   _context: RuntimeContext,
   page: Page,
   _browser: Browser,
-  logger: Logger
+  logger: Logger,
 ): Promise<void> {
   const arg = step.argument ?? '0';
   if (arg === 'bottom') {

@@ -13,7 +13,7 @@ export class BreakSignal extends Error {
 export async function evaluateCondition(
   condition: Condition,
   context: RuntimeContext,
-  page: Page
+  page: Page,
 ): Promise<boolean> {
   switch (condition.type) {
     case 'element-exists': {
@@ -50,8 +50,8 @@ export async function loopAction(
     context: RuntimeContext,
     page: Page,
     browser: Browser,
-    logger: Logger
-  ) => Promise<void>
+    logger: Logger,
+  ) => Promise<void>,
 ): Promise<void> {
   if (!step.condition) {
     throw new Error('loop action requires a condition');
@@ -82,8 +82,8 @@ export async function ifAction(
     context: RuntimeContext,
     page: Page,
     browser: Browser,
-    logger: Logger
-  ) => Promise<void>
+    logger: Logger,
+  ) => Promise<void>,
 ): Promise<void> {
   if (!step.condition) {
     throw new Error('if action requires a condition');
@@ -106,8 +106,8 @@ export async function ifElseAction(
     context: RuntimeContext,
     page: Page,
     browser: Browser,
-    logger: Logger
-  ) => Promise<void>
+    logger: Logger,
+  ) => Promise<void>,
 ): Promise<void> {
   if (!step.condition) {
     throw new Error('if-else action requires a condition');
@@ -126,7 +126,7 @@ export async function breakAction(
   _context: RuntimeContext,
   _page: Page,
   _browser: Browser,
-  _logger: Logger
+  _logger: Logger,
 ): Promise<void> {
   throw new BreakSignal();
 }
