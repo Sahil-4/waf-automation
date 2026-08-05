@@ -6,24 +6,24 @@ import { dispatch } from './actions/index';
 import { BreakSignal } from './actions/control';
 
 function interpolateStep(step: Step, context: RuntimeContext): Step {
-  const interp = (v: string | undefined): string | undefined =>
+  const interpolate = (v: string | undefined): string | undefined =>
     v !== undefined ? context.interpolate(v) : undefined;
 
   const interpolated: Step = {
     ...step,
-    selector: interp(step.selector),
-    argument: interp(step.argument),
-    target: interp(step.target),
+    selector: interpolate(step.selector),
+    argument: interpolate(step.argument),
+    target: interpolate(step.target),
   };
 
   if (step.condition) {
     interpolated.condition = {
       ...step.condition,
-      selector: interp(step.condition.selector),
-      key: interp(step.condition.key),
+      selector: interpolate(step.condition.selector),
+      key: interpolate(step.condition.key),
       value:
         typeof step.condition.value === 'string'
-          ? interp(step.condition.value)
+          ? interpolate(step.condition.value)
           : step.condition.value,
     };
   }

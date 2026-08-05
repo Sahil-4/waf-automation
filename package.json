@@ -4,15 +4,26 @@
   "description": "Web Automation Framework — general-purpose browser step executor",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "bin": { "waf": "dist/cli.js" },
-  "files": ["dist"],
+  "bin": {
+    "waf": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "ts-node src/cli.ts",
     "start": "node dist/cli.js",
     "prepublishOnly": "npm run build"
   },
-  "keywords": ["playwright", "browser-automation", "cli", "yaml", "web-scraping", "automation"],
+  "keywords": [
+    "playwright",
+    "browser-automation",
+    "cli",
+    "yaml",
+    "web-scraping",
+    "automation"
+  ],
   "author": "Sahil-4",
   "license": "MIT",
   "repository": {
@@ -32,9 +43,9 @@
     "commander": "^12.0.0"
   },
   "devDependencies": {
-    "typescript": "^5.4.0",
-    "@types/node": "^20.0.0",
     "@types/js-yaml": "^4.0.9",
-    "ts-node": "^10.9.0"
+    "@types/node": "^20.19.43",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.4.0"
   }
 }
