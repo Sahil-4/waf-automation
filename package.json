@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "playwright": "^1.44.0",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.3.0",
     "commander": "^12.0.0"
   },
   "devDependencies": {
