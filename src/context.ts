@@ -26,7 +26,10 @@ export class RuntimeContext {
     return str.replace(/\{\{ctx\.([^}]+)\}\}/g, (_match, key: string) => {
       if (this.store.has(key)) {
         const val = this.store.get(key);
-        return val !== null && val !== undefined ? String(val) : '';
+        if (val === null || val === undefined) return '';
+        if (typeof val === 'string') return val;
+        if (typeof val === 'number' || typeof val === 'boolean') return String(val);
+        return JSON.stringify(val);
       }
       this.logger.warn(`Interpolation token {{ctx.${key}}} not found in context — leaving as-is`);
       return `{{ctx.${key}}}`;
