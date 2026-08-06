@@ -10,7 +10,9 @@ export async function loadConfig(filePath: string): Promise<WafConfig> {
   try {
     raw = await fs.readFile(resolved, 'utf-8');
   } catch (err) {
-    throw new Error(`Cannot read config file "${resolved}": ${(err as Error).message}`);
+    throw new Error(`Cannot read config file "${resolved}": ${(err as Error).message}`, {
+      cause: err,
+    });
   }
 
   const ext = path.extname(resolved).toLowerCase();
@@ -20,13 +22,17 @@ export async function loadConfig(filePath: string): Promise<WafConfig> {
     try {
       parsed = yaml.load(raw);
     } catch (err) {
-      throw new Error(`YAML parse error in "${resolved}": ${(err as Error).message}`);
+      throw new Error(`YAML parse error in "${resolved}": ${(err as Error).message}`, {
+        cause: err,
+      });
     }
   } else if (ext === '.json') {
     try {
       parsed = JSON.parse(raw);
     } catch (err) {
-      throw new Error(`JSON parse error in "${resolved}": ${(err as Error).message}`);
+      throw new Error(`JSON parse error in "${resolved}": ${(err as Error).message}`, {
+        cause: err,
+      });
     }
   } else {
     throw new Error(`Unsupported config format "${ext}". Use .yaml, .yml, or .json`);
