@@ -34,7 +34,7 @@ export async function evaluateCondition(
     }
     default: {
       const exhaustive: never = condition.type;
-      throw new Error(`Unknown condition type: ${exhaustive}`);
+      throw new Error(`Unknown condition type: ${String(exhaustive)}`);
     }
   }
 }
@@ -121,7 +121,7 @@ export async function ifElseAction(
   }
 }
 
-export async function breakAction(
+export function breakAction(
   _step: Step,
   _context: RuntimeContext,
   _page: Page,

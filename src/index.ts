@@ -118,7 +118,7 @@ export async function run(options: {
 
   try {
     await executeSteps(config.steps, context, nullPage, nullBrowser, logger, config);
-  } catch (err) {
+  } catch {
     const logs = logger.getLogs();
     const lastFailed = [...logs].reverse().find((l) => l.status === 'failed');
     if (lastFailed !== undefined) {
