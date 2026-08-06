@@ -98,10 +98,10 @@ export async function dispatch(
       return {};
 
     case 'store-value':
-      await storeValue(step, context, page, browser, logger);
+      storeValue(step, context, page, browser, logger);
       return {};
     case 'log':
-      await logMessage(step, context, page, browser, logger);
+      logMessage(step, context, page, browser, logger);
       return {};
 
     case 'save-to-file':
@@ -126,7 +126,7 @@ export async function dispatch(
 
     default: {
       const exhaustive: never = step.action;
-      throw new Error(`Unknown action: ${exhaustive}`);
+      throw new Error(`Unknown action: ${String(exhaustive)}`);
     }
   }
 }
