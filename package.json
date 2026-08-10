@@ -32,11 +32,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sahil-4/waf.git"
+    "url": "git+https://github.com/sahil-4/waf-automation.git"
   },
-  "homepage": "https://github.com/sahil-4/waf#readme",
+  "homepage": "https://github.com/sahil-4/waf-automation#readme",
   "bugs": {
-    "url": "https://github.com/sahil-4/waf/issues"
+    "url": "https://github.com/sahil-4/waf-automation/issues"
   },
   "engines": {
     "node": ">=20"
