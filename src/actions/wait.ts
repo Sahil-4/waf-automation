@@ -19,7 +19,7 @@ export async function waitForSelector(
   logger: Logger,
 ): Promise<void> {
   const selector = resolveSelector(step);
-  const timeout = (step as Step & { timeout?: number }).timeout ?? 10000;
+  const timeout = step.timeout ?? 10000;
   logger.info(`Waiting for selector "${selector}" (timeout: ${timeout}ms)`);
   await page.waitForSelector(selector, { timeout });
 }

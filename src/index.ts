@@ -48,6 +48,7 @@ export interface Step {
   argument?: string;
   target?: string;
   onError?: 'fail' | 'ignore';
+  timeout?: number;
   condition?: Condition;
   steps?: Step[];
   elseSteps?: Step[];
@@ -83,15 +84,24 @@ export async function run(options: {
   const logger = new Logger();
 
   let config: WafConfig;
-  if (typeof options.config === 'string') {
-    config = await loadConfig(options.config);
-  } else {
-    config = options.config;
+  try {
+    config = typeof options.config === 'string' ? await loadConfig(options.config) : options.config;
+  } catch (err) {
+    logger.error(err instanceof Error ? err.message : String(err));
+    return {
+      status: 'failed',
+      failedStep: null,
+      context: {},
+      log: logger.getLogs(),
+      durationMs: Date.now() - startMs,
+    };
   }
 
   if (options.headed) {
     config = { ...config, browser: { ...config.browser, headless: false } };
   }
+
+  const context = new RuntimeContext(config, logger);
 
   if (options.dryRun) {
     logger.info(`[dry-run] Config: ${config.name}`);
@@ -103,13 +113,11 @@ export async function run(options: {
     return {
       status: 'success',
       failedStep: null,
-      context: {},
+      context: context.all(),
       log: logger.getLogs(),
       durationMs: Date.now() - startMs,
     };
   }
-
-  const context = new RuntimeContext(config, logger);
 
   const nullPage = null as unknown as import('playwright').Page;
   const nullBrowser = null as unknown as import('playwright').Browser;

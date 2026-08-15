@@ -44,12 +44,14 @@ export async function executeSteps(
 
   for (let i = 0; i < steps.length; i++) {
     const raw = steps[i];
-    const step = interpolateStep(raw, context);
     const startMs = Date.now();
 
-    logger.stepStart(i, step);
+    logger.stepStart(i, raw);
 
+    let step: Step = raw;
     try {
+      step = interpolateStep(raw, context);
+
       const result = await dispatch(
         step,
         context,
@@ -76,7 +78,7 @@ export async function executeSteps(
 
       const message = err instanceof Error ? err.message : String(err);
 
-      if (step.onError === 'ignore') {
+      if (raw.onError === 'ignore') {
         logger.stepEnd(i, step, 'ignored', durationMs, message);
       } else {
         logger.stepEnd(i, step, 'failed', durationMs, message);
