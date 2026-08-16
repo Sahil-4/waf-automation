@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Sample Page</title>
+  </head>
+  <body>
+    <h1 id="heading">Sample Page</h1>
+
+    <a id="attr-target" href="/target-path" data-foo="bar">attribute target</a>
+
+    <ul id="item-list">
+      <li class="item">
+        <span class="title">First Item</span>
+        <a class="link" href="/items/1">link-1</a>
+      </li>
+      <li class="item">
+        <span class="title">Second Item</span>
+        <a class="link" href="/items/2">link-2</a>
+      </li>
+      <li class="item">
+        <span class="title">Third Item</span>
+        <a class="link" href="/items/3">link-3</a>
+      </li>
+      <li class="item">
+        <span class="title">Fourth Item (no link)</span>
+      </li>
+    </ul>
+
+    <div id="exists-target">I exist</div>
+
+    <button
+      id="click-target"
+      onclick="document.getElementById('click-result').textContent = 'clicked'"
+    >
+      Click me
+    </button>
+    <span id="click-result"></span>
+
+    <input id="text-input" type="text" />
+    <input id="prefilled-input" type="text" value="prefilled text" />
+
+    <select id="dropdown">
+      <option value="a">Option A</option>
+      <option value="b">Option B</option>
+      <option value="c">Option C</option>
+    </select>
+
+    <div id="hover-target" onmouseenter="this.classList.add('hovered')">Hover me</div>
+
+    <input id="key-target" type="text" />
+
+    <div style="height: 3000px">tall spacer for scroll tests</div>
+    <div id="bottom-marker">bottom of page</div>
+
+    <script>
+      // appears 300ms after load — lets wait-for-selector tests prove actual
+      // waiting/polling behavior, not just instant-existence checks
+      setTimeout(() => {
+        const el = document.createElement('div');
+        el.id = 'delayed-target';
+        el.textContent = 'I appeared late';
+        document.body.appendChild(el);
+      }, 300);
+    </script>
+  </body>
+</html>
