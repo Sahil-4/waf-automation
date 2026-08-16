@@ -6,14 +6,14 @@ General npm publishing checklist, checked against `waf-automation`'s current sta
 
 - [x] Name available on npm (`npm view <name>`) — `waf-automation` confirmed free (`waf` was taken)
 - [x] Accurate `description`, `keywords`
-- [x] `repository`/`homepage`/`bugs` point to the real GitHub URL — confirmed matching the actual `git remote` (`Sahil-4/waf-automation`); `semantic-release --dry-run --no-ci` loads against it without error
+- [x] `repository`/`homepage`/`bugs` point to the real GitHub URL — confirmed matching the actual `git remote` (`Sahil-4/waf-automation`)
 - [x] `author` set
 
 ## Versioning
 
 - [ ] Follow semver strictly; breaking change = major bump, even pre-1.0
 - [x] Starting below `1.0.0` is fine (currently `0.1.0`)
-- [ ] Use `npm version patch|minor|major` — bumps `package.json` and tags git in one step
+- [x] Version bumps are automated via `release-please` — it opens/updates a release PR from conventional commit history; merging it bumps `package.json` and `CHANGELOG.md` and tags the release. Don't run `npm version` by hand.
 - [ ] Never hand-edit a published version; always publish a new one
 
 ## What gets published
@@ -33,7 +33,7 @@ General npm publishing checklist, checked against `waf-automation`'s current sta
 ## Dependencies
 
 - [x] Runtime deps in `dependencies`, tooling in `devDependencies`
-- [ ] `npm audit` before publishing — currently 7 (5 moderate, 2 high), all traced to `node_modules/npm/...`: bundled inside the `npm` CLI package itself, pulled in transitively via `@semantic-release/npm` (uses npm's internals for version bumping). Not in `waf-automation`'s own dependency tree, not shipped in the published tarball (`files: ["dist"]`) — release-tooling-only exposure. 6 fixable via plain `npm audit fix`; the 7th (`tar`) needs `--force` and would downgrade `@semantic-release/npm` to a breaking version — not applied without a decision.
+- [x] `npm audit` before publishing — 0 vulnerabilities. (The prior 7 were all bundled inside `@semantic-release/npm`'s dependency on the `npm` CLI itself, not `waf-automation`'s own tree — resolved automatically by switching to `release-please`, which needs no local npm package at all.)
 - [x] Prefer caret ranges unless a dependency has a history of breaking minors — confirmed, all deps use `^`
 - [x] Manual extra-install steps documented (`npx playwright install chromium`) instead of postinstall magic
 

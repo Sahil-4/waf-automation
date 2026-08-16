@@ -75,7 +75,7 @@ feat!: drop support for Node 18
 
 ## Versioning
 
-Don't hand-edit the `version` field in `package.json` and don't run `npm version` yourself. Once landed, that's handled automatically by CI from your commit types when your change reaches `main`. Just get the commit type right.
+Don't hand-edit the `version` field in `package.json` and don't run `npm version` yourself. CI (`release-please`) maintains a standing release PR built from your commit types — merging that PR (a maintainer decision, not automatic) bumps the version, updates `CHANGELOG.md`, and tags the release. Just get the commit type right and the PR writes itself.
 
 ## Skipping hooks
 
