@@ -8,6 +8,12 @@ export default defineConfig({
       reporter: ['text', 'html'],
       include: ['src/**/*.ts'],
       exclude: ['src/**/*.test.ts', 'src/cli.ts'],
+      thresholds: {
+        statements: 95,
+        lines: 95,
+        functions: 90,
+        branches: 75,
+      },
     },
     projects: [
       {
