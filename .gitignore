@@ -30,3 +30,7 @@ Thumbs.db
 # Temporary files
 *.tmp
 .temp/
+
+# Test artifacts
+coverage/
+test/tmp/
