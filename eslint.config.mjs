@@ -45,5 +45,18 @@ export default tseslint.config(
       'curly': ['error', 'all'],
     },
   },
+  {
+    files: ['**/*.test.ts', 'test/**/*.ts'],
+    rules: {
+      // Test/mocking utilities (expect.objectContaining, vi.fn(), vi.mocked(), ...)
+      // are inherently loosely typed — enforcing these here fights the tools
+      // rather than catching real bugs.
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
   eslintConfigPrettier,
 );
