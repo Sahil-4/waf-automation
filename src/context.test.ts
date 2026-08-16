@@ -24,6 +24,13 @@ describe('RuntimeContext', () => {
     expect(ctx.get('missing')).toBeUndefined();
   });
 
+  it('has() reports whether a key was actually set', () => {
+    const ctx = new RuntimeContext(makeConfig(), new Logger());
+    expect(ctx.has('foo')).toBe(false);
+    ctx.set('foo', undefined);
+    expect(ctx.has('foo')).toBe(true);
+  });
+
   it('all() returns a snapshot of every stored key', () => {
     const ctx = new RuntimeContext(makeConfig(), new Logger());
     ctx.set('a', 1);

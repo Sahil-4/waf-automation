@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterAll, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeAll, afterAll, beforeEach } from 'vitest';
 import { chromium, type Browser, type Page } from 'playwright';
 import path from 'path';
 import {
@@ -124,6 +124,23 @@ describe('select-option', () => {
     );
     expect(await page.$eval('#dropdown', (el: HTMLSelectElement) => el.value)).toBe('b');
   });
+
+  it('explicitly waits for the selector before acting, matching click/type/clear', async () => {
+    // Note: Playwright's own action methods already auto-wait for actionability,
+    // so an outcome-only test (does it succeed against a delayed element?) can't
+    // distinguish before/after this fix — verified empirically that page.hover()
+    // succeeds against a 300ms-delayed element with zero explicit wait at all.
+    // Spy on the actual call instead, to verify the explicit pre-wait genuinely happens.
+    const waitSpy = vi.spyOn(page, 'waitForSelector');
+    await selectOption(
+      { action: 'select-option', selector: '#dropdown', argument: 'b' },
+      makeContext(),
+      page,
+      browser,
+      new Logger(),
+    );
+    expect(waitSpy).toHaveBeenCalledWith('#dropdown', { timeout: 10000 });
+  });
 });
 
 describe('hover', () => {
@@ -137,6 +154,18 @@ describe('hover', () => {
     );
     const classAttr = await page.getAttribute('#hover-target', 'class');
     expect(classAttr).toContain('hovered');
+  });
+
+  it('explicitly waits for the selector before acting, matching click/type/clear', async () => {
+    const waitSpy = vi.spyOn(page, 'waitForSelector');
+    await hover(
+      { action: 'hover', selector: '#hover-target' },
+      makeContext(),
+      page,
+      browser,
+      new Logger(),
+    );
+    expect(waitSpy).toHaveBeenCalledWith('#hover-target', { timeout: 10000 });
   });
 });
 

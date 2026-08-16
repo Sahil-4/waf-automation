@@ -66,13 +66,14 @@ describe('evaluateCondition', () => {
     expect(result).toBe(false);
   });
 
-  it('context-equals: on a missing key, compares against the literal string "undefined"', async () => {
-    const result = await evaluateCondition(
-      { type: 'context-equals', key: 'missing', value: 'undefined' },
-      makeContext(),
-      page,
-    );
-    expect(result).toBe(true);
+  it('context-equals: throws on a missing key instead of silently comparing against "undefined"', async () => {
+    await expect(
+      evaluateCondition(
+        { type: 'context-equals', key: 'missing', value: 'x' },
+        makeContext(),
+        page,
+      ),
+    ).rejects.toThrow(/references context key "missing" which has not been set/);
   });
 
   it('context-greater-than: true when greater', async () => {
@@ -97,13 +98,14 @@ describe('evaluateCondition', () => {
     expect(result).toBe(false);
   });
 
-  it('context-greater-than: on a missing key, Number(undefined) is NaN so it is always false', async () => {
-    const result = await evaluateCondition(
-      { type: 'context-greater-than', key: 'missing', value: -999 },
-      makeContext(),
-      page,
-    );
-    expect(result).toBe(false);
+  it('context-greater-than: throws on a missing key instead of silently evaluating NaN', async () => {
+    await expect(
+      evaluateCondition(
+        { type: 'context-greater-than', key: 'missing', value: -999 },
+        makeContext(),
+        page,
+      ),
+    ).rejects.toThrow(/references context key "missing" which has not been set/);
   });
 
   it('context-contains: true on a substring match', async () => {
@@ -128,13 +130,20 @@ describe('evaluateCondition', () => {
     expect(result).toBe(false);
   });
 
-  it('context-contains: on a missing key, compares against the literal string "undefined"', async () => {
-    const result = await evaluateCondition(
-      { type: 'context-contains', key: 'missing', value: 'undef' },
-      makeContext(),
-      page,
-    );
-    expect(result).toBe(true);
+  it('context-contains: throws on a missing key instead of silently comparing against "undefined"', async () => {
+    await expect(
+      evaluateCondition(
+        { type: 'context-contains', key: 'missing', value: 'x' },
+        makeContext(),
+        page,
+      ),
+    ).rejects.toThrow(/references context key "missing" which has not been set/);
+  });
+
+  it('context-equals/greater-than/contains: also throws when key is omitted from the condition entirely', async () => {
+    await expect(
+      evaluateCondition({ type: 'context-equals', value: 'x' }, makeContext(), page),
+    ).rejects.toThrow(/references context key "" which has not been set/);
   });
 
   it('throws on an unknown condition type', async () => {

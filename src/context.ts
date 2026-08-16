@@ -22,6 +22,10 @@ export class RuntimeContext {
     return this.store.get(key);
   }
 
+  has(key: string): boolean {
+    return this.store.has(key);
+  }
+
   interpolate(str: string): string {
     return str.replace(/\{\{ctx\.([^}]+)\}\}/g, (_match, key: string) => {
       if (this.store.has(key)) {

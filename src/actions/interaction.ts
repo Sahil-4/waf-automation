@@ -73,6 +73,7 @@ export async function selectOption(
   const selector = resolveSelector(step);
   const value = step.argument ?? '';
   logger.info(`Selecting option "${value}" in "${selector}"`);
+  await page.waitForSelector(selector, { timeout: 10000 });
   await page.selectOption(selector, value);
 }
 
@@ -85,6 +86,7 @@ export async function hover(
 ): Promise<void> {
   const selector = resolveSelector(step);
   logger.info(`Hovering over "${selector}"`);
+  await page.waitForSelector(selector, { timeout: 10000 });
   await page.hover(selector);
 }
 

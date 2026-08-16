@@ -10,6 +10,16 @@ export class BreakSignal extends Error {
   }
 }
 
+function requireContextValue(condition: Condition, context: RuntimeContext): unknown {
+  const key = condition.key ?? '';
+  if (!context.has(key)) {
+    throw new Error(
+      `Condition "${condition.type}" references context key "${key}" which has not been set`,
+    );
+  }
+  return context.get(key);
+}
+
 export async function evaluateCondition(
   condition: Condition,
   context: RuntimeContext,
@@ -21,15 +31,15 @@ export async function evaluateCondition(
       return el !== null;
     }
     case 'context-equals': {
-      const val = context.get(condition.key ?? '');
+      const val = requireContextValue(condition, context);
       return String(val) === String(condition.value ?? '');
     }
     case 'context-greater-than': {
-      const val = context.get(condition.key ?? '');
+      const val = requireContextValue(condition, context);
       return Number(val) > Number(condition.value ?? 0);
     }
     case 'context-contains': {
-      const val = context.get(condition.key ?? '');
+      const val = requireContextValue(condition, context);
       return String(val).includes(String(condition.value ?? ''));
     }
     default: {
