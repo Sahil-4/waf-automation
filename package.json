@@ -24,7 +24,8 @@
     "test:watch": "vitest",
     "test:unit": "vitest run --project unit",
     "test:integration": "vitest run --project integration",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "release:dry": "semantic-release --dry-run --no-ci"
   },
   "keywords": [
     "playwright",
@@ -69,6 +70,12 @@
     "@commitlint/cli": "^21.2.1",
     "@commitlint/config-conventional": "^21.2.0",
     "@eslint/js": "^10.0.1",
+    "@semantic-release/changelog": "^7.0.0",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/git": "^11.0.1",
+    "@semantic-release/github": "^12.0.9",
+    "@semantic-release/npm": "^13.1.5",
+    "@semantic-release/release-notes-generator": "^14.1.1",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.19.43",
     "@vitest/coverage-v8": "^4.1.10",
@@ -78,6 +85,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^17.3.0",
     "prettier": "^3.9.6",
+    "semantic-release": "^25.0.9",
     "ts-node": "^10.9.0",
     "typescript": "^5.4.0",
     "typescript-eslint": "^8.66.0",
