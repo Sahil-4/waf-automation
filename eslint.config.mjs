@@ -56,6 +56,9 @@ export default tseslint.config(
       '@typescript-eslint/no-unsafe-member-access': 'off',
       '@typescript-eslint/no-unsafe-call': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
+      // expect(obj.method).toHaveBeenCalledWith(...) is the standard spy-assertion
+      // pattern and doesn't carry the "detached this" risk this rule guards against.
+      '@typescript-eslint/unbound-method': 'off',
     },
   },
   eslintConfigPrettier,
